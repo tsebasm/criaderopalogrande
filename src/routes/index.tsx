@@ -1,29 +1,62 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Toaster } from "sonner";
+import { CartProvider } from "@/context/CartContext";
+import { Navigation } from "@/components/landing/Navigation";
+import { Hero } from "@/components/landing/Hero";
+import { Legacy } from "@/components/landing/Legacy";
+import { Genetics } from "@/components/landing/Genetics";
+import { Marketplace } from "@/components/landing/Marketplace";
+import { Experience } from "@/components/landing/Experience";
+import { Transport } from "@/components/landing/Transport";
+import { Process } from "@/components/landing/Process";
+import { Testimonials } from "@/components/landing/Testimonials";
+import { Booking } from "@/components/landing/Booking";
+import { FAQ } from "@/components/landing/FAQ";
+import { FinalCTA } from "@/components/landing/FinalCTA";
+import { Footer } from "@/components/landing/Footer";
+import { FloatingActions } from "@/components/landing/FloatingActions";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "Criadero Palonegro — Caballo Criollo Colombiano de Élite" },
+      {
+        name: "description",
+        content:
+          "Criadero premium de Caballo Criollo Colombiano en Antioquia. Ejemplares disponibles, genética de élite, transporte nacional y agendamiento de visitas.",
+      },
+      { property: "og:title", content: "Criadero Palonegro — Caballo Criollo Colombiano" },
+      {
+        property: "og:description",
+        content: "Donde la genética, la tradición y la excelencia cabalgan juntas.",
+      },
     ],
   }),
-  component: Index,
+  component: Landing,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Landing() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <CartProvider>
+      <div className="bg-ivory text-charcoal">
+        <Navigation />
+        <main>
+          <Hero />
+          <Legacy />
+          <Genetics />
+          <Marketplace />
+          <Experience />
+          <Transport />
+          <Process />
+          <Testimonials />
+          <Booking />
+          <FAQ />
+          <FinalCTA />
+        </main>
+        <Footer />
+        <FloatingActions />
+      </div>
+      <Toaster position="bottom-center" theme="light" />
+    </CartProvider>
   );
 }
