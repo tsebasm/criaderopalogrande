@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { useCart } from "@/context/CartContext";
 import { formatCOP } from "@/lib/horses";
 
