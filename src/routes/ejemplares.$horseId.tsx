@@ -124,7 +124,7 @@ function HorseDetail() {
                 <div className="mt-10 border-t border-charcoal/10 pt-8">
                   <div className="eyebrow text-leather mb-5">Palmarés</div>
                   <ul className="space-y-2">
-                    {horse.awards.map((a) => (
+                    {horse.awards.map((a: string) => (
                       <li key={a} className="flex gap-3 text-sm text-charcoal/75">
                         <span className="text-gold">★</span>
                         {a}
