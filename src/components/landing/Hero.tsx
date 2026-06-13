@@ -61,7 +61,7 @@ export function Hero() {
       </div>
 
       {/* Stats bar — separado para no tapar los botones del hero */}
-      <div className="bg-charcoal text-ivory border-t border-ivory/10">
+      <div className="bg-charcoal text-ivory">
         <div className="container-x grid grid-cols-2 md:grid-cols-4">
           {stats.map((s, i) => (
             <div
