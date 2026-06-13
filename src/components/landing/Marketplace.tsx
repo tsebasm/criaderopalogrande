@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { horses, formatCOP, type Andar } from "@/lib/horses";
 import { useCart } from "@/context/CartContext";
 
@@ -101,12 +102,13 @@ export function Marketplace() {
                     )}
                   </div>
                   <div className="absolute inset-x-4 bottom-4 flex gap-2 translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                    <a
-                      href="#visita"
+                    <Link
+                      to="/ejemplares/$horseId"
+                      params={{ horseId: h.id }}
                       className="flex-1 bg-ivory text-charcoal text-[10px] uppercase tracking-[0.22em] font-semibold py-3 text-center hover:bg-gold"
                     >
                       Ver Perfil
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
