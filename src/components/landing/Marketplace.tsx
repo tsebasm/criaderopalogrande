@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { horses, formatCOP, type Andar } from "@/lib/horses";
 import { useCart } from "@/context/CartContext";
 
