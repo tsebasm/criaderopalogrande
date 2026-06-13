@@ -101,13 +101,13 @@ export function FloatingActions() {
                   {formatCOP(total)}
                 </span>
               </div>
-              <a
-                href="#visita"
+              <Link
+                to="/checkout"
                 onClick={() => setOpen(false)}
                 className="block w-full bg-olive text-ivory text-center py-4 text-xs uppercase tracking-[0.3em] font-bold hover:bg-charcoal transition-colors"
               >
-                Formalizar Reserva
-              </a>
+                Finalizar Compra
+              </Link>
               <a
                 href="https://wa.me/573040000000"
                 target="_blank"
