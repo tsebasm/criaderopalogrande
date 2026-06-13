@@ -8,12 +8,9 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
-import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { CartProvider } from "@/context/CartContext";
-import { FloatingActions } from "@/components/landing/FloatingActions";
 
 function NotFoundComponent() {
   return (
@@ -84,9 +81,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Criadero premium de Caballo Criollo Colombiano en Antioquia. Genética de élite, ejemplares disponibles, transporte nacional y agendamiento de visitas." },
       { name: "author", content: "Criadero Palonegro" },
       { property: "og:title", content: "Criadero Palonegro — Caballo Criollo Colombiano de Élite" },
-      { property: "og:description", content: "Donde la genética, la tradición y la excelencia cabalgan juntas." },
+      { property: "og:description", content: "Criadero premium de Caballo Criollo Colombiano en Antioquia. Genética de élite, ejemplares disponibles, transporte nacional y agendamiento de visitas." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Criadero Palonegro — Caballo Criollo Colombiano de Élite" },
+      { name: "twitter:description", content: "Criadero premium de Caballo Criollo Colombiano en Antioquia. Genética de élite, ejemplares disponibles, transporte nacional y agendamiento de visitas." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/726e5be0-1a8e-41f1-b09c-8f32356b0fdd/id-preview-a64e59f7--f6ea6418-dbab-4240-9fe9-52bfa28dc876.lovable.app-1781393649241.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/726e5be0-1a8e-41f1-b09c-8f32356b0fdd/id-preview-a64e59f7--f6ea6418-dbab-4240-9fe9-52bfa28dc876.lovable.app-1781393649241.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -123,11 +124,8 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <CartProvider>
-        <Outlet />
-        <FloatingActions />
-      </CartProvider>
-      <Toaster position="bottom-center" theme="light" />
+      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+      <Outlet />
     </QueryClientProvider>
   );
 }
