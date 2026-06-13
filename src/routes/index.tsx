@@ -1,6 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Toaster } from "sonner";
-import { CartProvider } from "@/context/CartContext";
 import { Navigation } from "@/components/landing/Navigation";
 import { Hero } from "@/components/landing/Hero";
 import { Legacy } from "@/components/landing/Legacy";
@@ -14,7 +12,6 @@ import { Booking } from "@/components/landing/Booking";
 import { FAQ } from "@/components/landing/FAQ";
 import { FinalCTA } from "@/components/landing/FinalCTA";
 import { Footer } from "@/components/landing/Footer";
-import { FloatingActions } from "@/components/landing/FloatingActions";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -37,26 +34,22 @@ export const Route = createFileRoute("/")({
 
 function Landing() {
   return (
-    <CartProvider>
-      <div className="bg-ivory text-charcoal">
-        <Navigation />
-        <main>
-          <Hero />
-          <Legacy />
-          <Genetics />
-          <Marketplace />
-          <Experience />
-          <Transport />
-          <Process />
-          <Testimonials />
-          <Booking />
-          <FAQ />
-          <FinalCTA />
-        </main>
-        <Footer />
-        <FloatingActions />
-      </div>
-      <Toaster position="bottom-center" theme="light" />
-    </CartProvider>
+    <div className="bg-ivory text-charcoal">
+      <Navigation />
+      <main>
+        <Hero />
+        <Legacy />
+        <Genetics />
+        <Marketplace />
+        <Experience />
+        <Transport />
+        <Process />
+        <Testimonials />
+        <Booking />
+        <FAQ />
+        <FinalCTA />
+      </main>
+      <Footer />
+    </div>
   );
 }
