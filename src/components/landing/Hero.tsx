@@ -66,7 +66,7 @@ export function Hero() {
           {stats.map((s, i) => (
             <div
               key={s.label}
-              className={`py-8 lg:py-10 ${i % 2 === 1 ? "border-l border-ivory/10" : ""} ${i === 2 ? "md:border-l" : ""}`}
+              className="py-8 lg:py-10 text-center"
             >
               <div className="font-serif text-3xl lg:text-4xl text-gold-soft">{s.value}</div>
               <div className="mt-1 text-[10px] uppercase tracking-[0.28em] text-ivory/60">
