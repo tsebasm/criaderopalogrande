@@ -14,21 +14,6 @@ import { FinalCTA } from "@/components/landing/FinalCTA";
 import { Footer } from "@/components/landing/Footer";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Criadero Palonegro — Caballo Criollo Colombiano de Élite" },
-      {
-        name: "description",
-        content:
-          "Criadero premium de Caballo Criollo Colombiano en Antioquia. Ejemplares disponibles, genética de élite, transporte nacional y agendamiento de visitas.",
-      },
-      { property: "og:title", content: "Criadero Palonegro — Caballo Criollo Colombiano" },
-      {
-        property: "og:description",
-        content: "Donde la genética, la tradición y la excelencia cabalgan juntas.",
-      },
-    ],
-  }),
   component: Landing,
 });
 

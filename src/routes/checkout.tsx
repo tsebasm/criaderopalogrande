@@ -7,12 +7,6 @@ import { Navigation } from "@/components/landing/Navigation";
 import { Footer } from "@/components/landing/Footer";
 
 export const Route = createFileRoute("/checkout")({
-  head: () => ({
-    meta: [
-      { title: "Pago — Criadero Palonegro" },
-      { name: "description", content: "Finaliza tu reserva de ejemplar Palonegro de forma segura." },
-    ],
-  }),
   component: Checkout,
 });
 

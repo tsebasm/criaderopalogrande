@@ -10,21 +10,6 @@ export const Route = createFileRoute("/ejemplares/$horseId")({
     if (!horse) throw notFound();
     return { horse };
   },
-  head: ({ loaderData }) => ({
-    meta: [
-      {
-        title: loaderData
-          ? `${loaderData.horse.name} — Criadero Palonegro`
-          : "Ejemplar — Criadero Palonegro",
-      },
-      {
-        name: "description",
-        content: loaderData
-          ? `${loaderData.horse.name}, ${loaderData.horse.andar}. Linaje ${loaderData.horse.lineage}.`
-          : "",
-      },
-    ],
-  }),
   notFoundComponent: () => (
     <div className="min-h-screen grid place-items-center bg-ivory">
       <div className="text-center">
