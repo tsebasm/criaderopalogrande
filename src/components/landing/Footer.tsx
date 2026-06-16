@@ -41,7 +41,7 @@ export function Footer() {
         </div>
 
         <div className="pt-10 border-t border-ivory/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-[10px] tracking-[0.3em] uppercase text-ivory/40">
-          <p>© {new Date().getFullYear()} Criadero Palonegro · Todos los derechos reservados</p>
+          <p>© {new Date().getFullYear()} Sebastián Triana · Todos los derechos reservados</p>
           <div className="flex gap-6">
             <a href="#" className="hover:text-gold-soft">Privacidad</a>
             <a href="#" className="hover:text-gold-soft">Términos</a>
