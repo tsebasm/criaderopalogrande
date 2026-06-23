@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as GeneticaRouteImport } from './routes/genetica'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EjemplaresHorseIdRouteImport } from './routes/ejemplares.$horseId'
 
+const GeneticaRoute = GeneticaRouteImport.update({
+  id: '/genetica',
+  path: '/genetica',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CheckoutRoute = CheckoutRouteImport.update({
   id: '/checkout',
   path: '/checkout',
@@ -32,35 +38,46 @@ const EjemplaresHorseIdRoute = EjemplaresHorseIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/checkout': typeof CheckoutRoute
+  '/genetica': typeof GeneticaRoute
   '/ejemplares/$horseId': typeof EjemplaresHorseIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/checkout': typeof CheckoutRoute
+  '/genetica': typeof GeneticaRoute
   '/ejemplares/$horseId': typeof EjemplaresHorseIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/checkout': typeof CheckoutRoute
+  '/genetica': typeof GeneticaRoute
   '/ejemplares/$horseId': typeof EjemplaresHorseIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/checkout' | '/ejemplares/$horseId'
+  fullPaths: '/' | '/checkout' | '/genetica' | '/ejemplares/$horseId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/checkout' | '/ejemplares/$horseId'
-  id: '__root__' | '/' | '/checkout' | '/ejemplares/$horseId'
+  to: '/' | '/checkout' | '/genetica' | '/ejemplares/$horseId'
+  id: '__root__' | '/' | '/checkout' | '/genetica' | '/ejemplares/$horseId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CheckoutRoute: typeof CheckoutRoute
+  GeneticaRoute: typeof GeneticaRoute
   EjemplaresHorseIdRoute: typeof EjemplaresHorseIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/genetica': {
+      id: '/genetica'
+      path: '/genetica'
+      fullPath: '/genetica'
+      preLoaderRoute: typeof GeneticaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checkout': {
       id: '/checkout'
       path: '/checkout'
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CheckoutRoute: CheckoutRoute,
+  GeneticaRoute: GeneticaRoute,
   EjemplaresHorseIdRoute: EjemplaresHorseIdRoute,
 }
 export const routeTree = rootRouteImport
