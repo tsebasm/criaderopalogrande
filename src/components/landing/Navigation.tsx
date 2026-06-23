@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { useCart } from "@/context/CartContext";
 
 const links = [
-  { href: "#legado", label: "Legado" },
-  { href: "#genetica", label: "Genética" },
-  { href: "#ejemplares", label: "Ejemplares" },
-  { href: "#experiencia", label: "Hacienda" },
-  { href: "#transporte", label: "Transporte" },
-  { href: "#visita", label: "Contacto" },
+  { href: "/#legado", label: "Legado" },
+  { href: "/#ejemplares", label: "Ejemplares" },
+  { href: "/#experiencia", label: "Hacienda" },
+  { href: "/#transporte", label: "Transporte" },
+  { href: "/#visita", label: "Contacto" },
 ];
 
 export function Navigation() {
@@ -31,7 +31,7 @@ export function Navigation() {
       }`}
     >
       <div className="container-x flex items-center justify-between gap-6">
-        <a href="#top" className="flex items-center gap-3 group">
+        <a href="/#top" className="flex items-center gap-3 group">
           <span
             className={`size-9 rounded-full grid place-items-center ring-1 transition-colors ${
               scrolled
@@ -74,6 +74,14 @@ export function Navigation() {
               {l.label}
             </a>
           ))}
+          <Link
+            to="/genetica"
+            className={`text-[11px] uppercase tracking-[0.22em] font-semibold transition-colors ${
+              scrolled ? "text-olive hover:text-olive-deep" : "text-gold-soft hover:text-ivory"
+            }`}
+          >
+            Genética Equina
+          </Link>
         </nav>
 
         <div className="flex items-center gap-3">
@@ -135,6 +143,13 @@ export function Navigation() {
                 {l.label}
               </a>
             ))}
+            <Link
+              to="/genetica"
+              onClick={() => setMobile(false)}
+              className="text-sm uppercase tracking-[0.2em] font-semibold text-olive hover:text-olive-deep py-2"
+            >
+              Genética Equina
+            </Link>
           </div>
         </div>
       )}
