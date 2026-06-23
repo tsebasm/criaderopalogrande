@@ -69,7 +69,7 @@ export function PremiumLines() {
                 </span>
                 <div className="absolute inset-x-0 bottom-0 p-6">
                   <div className="text-[10px] uppercase tracking-[0.25em] text-gold-soft mb-1">
-                    {line.origin} · {line.discipline}
+                    {line.andar}
                   </div>
                   <h3 className="font-serif text-3xl text-ivory leading-none">{line.name}</h3>
                 </div>

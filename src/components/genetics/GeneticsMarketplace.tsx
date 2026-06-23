@@ -32,9 +32,9 @@ export function GeneticsMarketplace() {
   const [maxPrice, setMaxPrice] = useState(PRICE_MAX);
   const [conservacion, setConservacion] = useState<Conservacion[]>([]);
 
-  const breeds = useMemo(() => unique(geneticListings.map((l) => l.breed)), []);
-  const disciplines = useMemo(() => unique(geneticListings.map((l) => l.discipline)), []);
-  const origins = useMemo(() => unique(geneticListings.map((l) => l.origin)), []);
+  const breeds = useMemo(() => unique(geneticListings.map((l) => l.raza)), []);
+  const disciplines = useMemo(() => unique(geneticListings.map((l) => l.andar)), []);
+  const origins = useMemo(() => unique(geneticListings.map((l) => l.location)), []);
 
   const toggleConservacion = (c: Conservacion) =>
     setConservacion((prev) =>
@@ -44,9 +44,9 @@ export function GeneticsMarketplace() {
   const visible = useMemo(() => {
     return geneticListings.filter((l) => {
       if (type !== "Todos" && l.type !== type) return false;
-      if (breed !== "Todas" && l.breed !== breed) return false;
-      if (discipline !== "Todas" && l.discipline !== discipline) return false;
-      if (origin !== "Todos" && l.origin !== origin) return false;
+      if (breed !== "Todas" && l.raza !== breed) return false;
+      if (discipline !== "Todas" && l.andar !== discipline) return false;
+      if (origin !== "Todos" && l.location !== origin) return false;
 
       const effPrice = l.pricePerDose ?? l.price ?? 0;
       if (effPrice > maxPrice) return false;
@@ -242,7 +242,7 @@ function ListingCard({ listing: l }: { listing: (typeof geneticListings)[number]
 
       <div className="p-6 flex flex-col flex-1">
         <div className="text-[10px] uppercase tracking-[0.2em] text-leather mb-2">
-          {l.line} · {l.breed}
+          {l.line} · {l.raza}
         </div>
         <h3 className="font-serif text-2xl text-olive-deep leading-tight">{l.name}</h3>
 
@@ -262,7 +262,6 @@ function ListingCard({ listing: l }: { listing: (typeof geneticListings)[number]
               <dd className="text-charcoal/75">{l.reproductiveHistory}</dd>
             </div>
           )}
-          <Spec label="Origen" value={l.origin} />
           <Spec label="Ubicación" value={l.location} />
         </dl>
 

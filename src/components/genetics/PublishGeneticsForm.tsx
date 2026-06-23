@@ -89,24 +89,24 @@ export function PublishGeneticsForm() {
                 <Input name="price" type="number" min={0} placeholder="0" />
               </Field>
             </div>
-
             <div className="grid sm:grid-cols-2 gap-5 mt-5">
               <Field label="Raza">
-                <Input name="breed" placeholder="Holsteiner, BWP…" />
+                <Input name="breed" placeholder="Caballo Criollo Colombiano..." defaultValue="Caballo Criollo Colombiano" />
               </Field>
-              <Field label="Disciplina">
+              <Field label="Modalidad (Andar)">
                 <select name="discipline" className={selectClass}>
-                  <option>Salto</option>
-                  <option>Doma</option>
-                  <option>Concurso Completo</option>
-                  <option>Polo</option>
+                  <option>Trocha Pura (P3)</option>
+                  <option>Trocha y Galope (P2)</option>
+                  <option>Paso Fino Colombiano (P4)</option>
+                  <option>Trote y Galope (P1)</option>
+                  <option>Paseo</option>
                 </select>
               </Field>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-5 mt-5">
               <Field label="País de origen">
-                <Input name="origin" placeholder="Alemania, Colombia…" />
+                <Input name="origin" placeholder="Colombia..." defaultValue="Colombia" />
               </Field>
               <Field label="Ubicación">
                 <Input name="location" placeholder="Ciudad, departamento" />

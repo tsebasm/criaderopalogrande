@@ -65,6 +65,8 @@ export type GeneticListing = {
   height?: string; // alzada
   reproductiveHistory?: string; // historial reproductivo donadora
   results?: string[]; // premios / resultados
+  age?: string;
+  gestationDays?: number;
 };
 
 /* ------------------------------------------------------------------ */
