@@ -216,12 +216,12 @@ export function GeneticsMarketplace() {
 function ListingCard({ listing: l }: { listing: (typeof geneticListings)[number] }) {
   return (
     <article className="bg-ivory border border-charcoal/10 group flex flex-col">
-      <div className="relative aspect-[4/3] overflow-hidden bg-beige">
+      <div className="relative aspect-[4/3] overflow-hidden bg-beige p-6 flex items-center justify-center">
         <img
           src={l.image}
           alt={l.name}
           loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+          className="h-full w-full object-contain transition-transform duration-[1200ms] ease-out group-hover:scale-105"
         />
         <div className="absolute top-3 left-3 flex flex-col gap-2">
           <span className="bg-olive text-ivory text-[9px] uppercase tracking-[0.2em] font-bold px-3 py-1.5">
