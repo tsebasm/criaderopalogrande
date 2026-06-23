@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import {
   geneticListings,
   geneticCategories,
+  andares,
   formatPrice,
   formatCOP,
   type GeneticType,

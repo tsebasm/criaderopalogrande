@@ -6,18 +6,19 @@ export { formatCOP };
 /* Types                                                               */
 /* ------------------------------------------------------------------ */
 
-export type GeneticType =
-  | "Embrión"
-  | "Semen"
-  | "Padrote"
-  | "Donadora"
-  | "Preñez"
-  | "Potro"
-  | "Servicio";
+export type GeneticType = "Embrión" | "Donadora" | "Semen" | "Potro";
 
-export type Disciplina = "Salto" | "Doma" | "Concurso Completo" | "Polo";
+/** Modalidades (andares) del Caballo Criollo Colombiano. */
+export type Andar =
+  | "Trocha Pura (P3)"
+  | "Trocha y Galope (P2)"
+  | "Paso Fino Colombiano (P4)"
+  | "Trote y Galope (P1)"
+  | "Paseo";
 
 export type Conservacion = "Fresco" | "Congelado" | "Refrigerado";
+
+export const RAZA = "Caballo Criollo Colombiano";
 
 /** A single ancestor node within a pedigree. */
 export type Ancestor = {
@@ -43,11 +44,12 @@ export type GeneticListing = {
   type: GeneticType;
   name: string;
   image: string;
-  /** Recognised genetic line / family. */
+  /** Línea / familia genética. */
   line: string;
-  breed: string; // raza
-  discipline: Disciplina;
-  origin: string; // país de origen
+  raza: string;
+  andar: Andar;
+  birthDate: string; // fecha de nacimiento
+  sex: "Macho" | "Hembra";
   location: string; // ubicación física
   price: number | null;
   status: "Disponible" | "Reservado" | "Vendido";
@@ -59,81 +61,61 @@ export type GeneticListing = {
   conservacion?: Conservacion; // embrión / semen
   dosesAvailable?: number; // semen
   pricePerDose?: number; // semen
-  registry?: string; // registro
-  height?: string; // alzada (padrote / donadora)
-  age?: string;
-  results?: string[]; // resultados deportivos
+  registry?: string; // registro Fedequinas
+  height?: string; // alzada
   reproductiveHistory?: string; // historial reproductivo donadora
-  gestationDays?: number; // preñez
+  results?: string[]; // premios / resultados
 };
 
 /* ------------------------------------------------------------------ */
-/* Premium international lines (carousel)                              */
+/* Reproductores destacados (carousel · saltos de reproductores)       */
 /* ------------------------------------------------------------------ */
 
 export type PremiumLine = {
   name: string;
-  origin: string;
+  andar: string;
   image: string;
-  discipline: string;
   highlight: string;
+  pricePerDose: number;
   blurb: string;
 };
 
 export const premiumLines: PremiumLine[] = [
   {
-    name: "Chacco Blue",
-    origin: "Alemania",
-    image: "/genetics/line-chacco.png",
-    discipline: "Salto 1.60m",
-    highlight: "#1 WBFSH Sire Ranking",
+    name: "Greco del Trébol",
+    andar: "Trocha Pura (P3)",
+    image: "/genetics/repro-greco.png",
+    highlight: "Reproductor Élite",
+    pricePerDose: 2_000_000,
     blurb:
-      "El semental de salto más influyente de la última década, padre de campeones olímpicos y de Grand Prix.",
+      "Semental de Trocha Pura con descendencia campeona. Salto disponible en fresco y congelado con registro Fedequinas.",
   },
   {
-    name: "Cornet Obolensky",
-    origin: "Bélgica",
-    image: "/genetics/line-cornet.png",
-    discipline: "Salto 1.60m",
-    highlight: "Línea Olímpica",
+    name: "Ilusionista de Villa Laura",
+    andar: "Trocha Pura (P3)",
+    image: "/genetics/repro-ilusionista.png",
+    highlight: "Servicio Reproductivo",
+    pricePerDose: 800_000,
     blurb:
-      "Sangre Holsteiner moderna con elasticidad, técnica y un temperamento excepcional para la alta competencia.",
+      "Línea Villa Laura, reconocida por la finura del andar y la transmisión de aplomos y temperamento dócil.",
   },
   {
-    name: "Diamant de Semilly",
-    origin: "Francia",
-    image: "/genetics/line-diamant.png",
-    discipline: "Salto 1.60m",
-    highlight: "Campeón del Mundo SF",
+    name: "Aurelio M de las Bermudas",
+    andar: "Trocha Pura (P3)",
+    image: "/genetics/repro-aurelio.png",
+    highlight: "Servicio Reproductivo",
+    pricePerDose: 600_000,
     blurb:
-      "Pilar del Selle Français, transmite potencia, coraje y un galope de competición inconfundible.",
+      "Reproductor de gran prepotencia, aporta brío, recogimiento y una notable calidad de movimiento a su progenie.",
   },
   {
-    name: "Balou du Rouet",
-    origin: "Alemania",
-    image: "/genetics/line-chacco.png",
-    discipline: "Salto 1.55m",
-    highlight: "Oldenburg Élite",
+    name: "Comanche",
+    andar: "Paseo",
+    image: "/genetics/repro-comanche.png",
+    highlight: "Servicio Reproductivo",
+    pricePerDose: 600_000,
     blurb:
-      "Reconocido por la calidad de sus productos y una rara combinación de sangre, modelo y rendimiento.",
-  },
-  {
-    name: "Conthargos",
-    origin: "Alemania",
-    image: "/genetics/line-diamant.png",
-    discipline: "Salto 1.55m",
-    highlight: "Sangre Contender",
-    blurb:
-      "Semental moderno que aporta reflejos, cuidado de barras y una excelente transmisión morfológica.",
-  },
-  {
-    name: "Stakkato",
-    origin: "Alemania",
-    image: "/genetics/line-cornet.png",
-    discipline: "Salto 1.60m",
-    highlight: "Hannoveriano Legendario",
-    blurb:
-      "Padre de sementales por excelencia, su descendencia domina los rankings de cría hannoveriana.",
+      "Semental de paseo con morfología sobresaliente y un carácter equilibrado ideal para cría de pie de cría.",
   },
 ];
 
@@ -142,7 +124,7 @@ export const premiumLines: PremiumLine[] = [
 /* ------------------------------------------------------------------ */
 
 export type GeneticCategory = {
-  type: GeneticType | "Todos";
+  type: GeneticType;
   label: string;
   description: string;
 };
@@ -151,42 +133,31 @@ export const geneticCategories: GeneticCategory[] = [
   {
     type: "Embrión",
     label: "Embriones",
-    description: "Cruces de élite listos para transferencia, frescos o congelados.",
-  },
-  {
-    type: "Semen",
-    label: "Semen",
-    description: "Dosis de sementales internacionales con registro y logística incluida.",
-  },
-  {
-    type: "Padrote",
-    label: "Padrotes",
-    description: "Sementales aprobados con palmarés deportivo comprobado.",
+    description:
+      "Embriones de cruces seleccionados, listos para transferencia, frescos o congelados.",
   },
   {
     type: "Donadora",
-    label: "Yeguas Donadoras",
-    description: "Vientres de alto índice genético e historial reproductivo.",
+    label: "Donantes",
+    description:
+      "Yeguas donadoras de alto índice genético con historial reproductivo comprobado.",
   },
   {
-    type: "Preñez",
-    label: "Preñeces Confirmadas",
-    description: "Gestaciones verificadas por ecografía con pedigrí garantizado.",
+    type: "Semen",
+    label: "Saltos de Reproductores",
+    description:
+      "Dosis y servicios reproductivos de sementales aprobados con registro Fedequinas.",
   },
   {
     type: "Potro",
-    label: "Potros por Genética",
-    description: "Crías jóvenes seleccionadas por su potencial de salto.",
-  },
-  {
-    type: "Servicio",
-    label: "Servicios Reproductivos",
-    description: "Transferencia de embriones, ICSI, congelación y asesoría.",
+    label: "Potros & Potrancas",
+    description:
+      "Crías jóvenes seleccionadas por su andar, modelo y potencial deportivo.",
   },
 ];
 
 /* ------------------------------------------------------------------ */
-/* Listings (mock catalogue)                                          */
+/* Listings (catálogo · datos adaptados de Criadero Palonegro)         */
 /* ------------------------------------------------------------------ */
 
 const ped = (
@@ -206,231 +177,399 @@ const ped = (
 });
 
 export const geneticListings: GeneticListing[] = [
+  /* ---------------------------- Embriones --------------------------- */
   {
-    id: "embrion-chacco-cornet",
+    id: "embrion-excesiva-de-las-diosas",
     type: "Embrión",
-    name: "Embrión Chacco Blue × Cornet",
-    image: "/genetics/embryo.png",
-    line: "Chacco Blue",
-    breed: "Holsteiner",
-    discipline: "Salto",
-    origin: "Alemania",
-    location: "Rionegro, Antioquia",
-    price: 38_000_000,
+    name: "Excesiva de las Diosas / Embrión",
+    image: "/genetics/mare-3.png",
+    line: "Las Diosas",
+    raza: RAZA,
+    andar: "Trocha Pura (P3)",
+    birthDate: "30 de julio de 2023",
+    sex: "Hembra",
+    location: "Criadero Palonegro · Colombia",
+    price: 80_000_000,
     status: "Disponible",
     featured: true,
     conservacion: "Congelado",
     description:
-      "Embrión de doble línea de salto internacional, congelado y listo para transferencia. Documentación genética completa.",
+      "Embrión de Trocha Pura de la reconocida línea Las Diosas. Vientre de máxima jerarquía con genética campeona, listo para transferencia.",
     pedigree: ped(
-      "Chacco Blue",
-      "Cornetta",
-      "Chambertin",
-      "Contara",
-      "Cornet Obolensky",
-      "Larina",
+      "Sortario de la Esmeralda",
+      "Diosa de las Majadas",
+      "Resorte IV",
+      "Pincelada del Sur",
+      "Capuchino",
+      "Excelsa de las Diosas",
     ),
   },
   {
-    id: "semen-diamant-semilly",
-    type: "Semen",
-    name: "Diamant de Semilly",
-    image: "/genetics/line-diamant.png",
-    line: "Diamant de Semilly",
-    breed: "Selle Français",
-    discipline: "Salto",
-    origin: "Francia",
-    location: "Importado · Logística nacional",
-    price: null,
-    pricePerDose: 6_500_000,
-    dosesAvailable: 24,
-    registry: "SF 94-117",
-    conservacion: "Congelado",
-    status: "Disponible",
-    featured: true,
-    description:
-      "Dosis de semen congelado del campeón del mundo de sementales Selle Français. Envío en termo de nitrógeno.",
-    pedigree: ped(
-      "Le Tot de Semilly",
-      "Venise des Cresles",
-      "Grand Veneur",
-      "Petite Mascotte",
-      "Elf III",
-      "Isatis",
-    ),
-  },
-  {
-    id: "padrote-imperio-real",
-    type: "Padrote",
-    name: "Imperio Real",
-    image: "/genetics/line-chacco.png",
-    line: "Chacco Blue",
-    breed: "Holsteiner",
-    discipline: "Salto",
-    origin: "Colombia",
-    location: "La Ceja, Antioquia",
-    price: 420_000_000,
-    status: "Disponible",
-    featured: true,
-    height: "1.70 m",
-    age: "8 años",
-    registry: "Fedecuestre 0091",
-    results: [
-      "Campeón Gran Premio 1.50m Bogotá 2024",
-      "Top 3 Copa Federación 2023",
-    ],
-    description:
-      "Semental aprobado con descendencia en competencia. Servicio disponible por monta dirigida y colecta.",
-    pedigree: ped(
-      "Chacco Blue",
-      "Reina del Valle",
-      "Chambertin",
-      "Wanita",
-      "Cornet Obolensky",
-      "Galana",
-    ),
-  },
-  {
-    id: "donadora-estrella-del-sur",
-    type: "Donadora",
-    name: "Estrella del Sur",
-    image: "/genetics/mare.png",
-    line: "Cornet Obolensky",
-    breed: "BWP",
-    discipline: "Salto",
-    origin: "Bélgica",
-    location: "Rionegro, Antioquia",
-    price: 290_000_000,
-    status: "Reservado",
-    featured: true,
-    height: "1.66 m",
-    age: "10 años",
-    reproductiveHistory: "12 embriones viables · 7 potros nacidos",
-    description:
-      "Yegua donadora de alto índice, vientre probado con productos en competencia internacional.",
-    pedigree: ped(
-      "Cornet Obolensky",
-      "Bamba van het Eigenlo",
-      "Clinton",
-      "Rabanna du Bois",
-      "Darco",
-      "Wendy",
-    ),
-  },
-  {
-    id: "preniez-balou-stakkato",
-    type: "Preñez",
-    name: "Preñez Balou du Rouet × Stakkato",
-    image: "/genetics/mare.png",
-    line: "Balou du Rouet",
-    breed: "Oldenburg",
-    discipline: "Salto",
-    origin: "Alemania",
-    location: "La Ceja, Antioquia",
-    price: 72_000_000,
-    status: "Disponible",
-    gestationDays: 210,
-    description:
-      "Preñez confirmada por ecografía, receptora sana y certificada. Pedigrí de doble línea de salto.",
-    pedigree: ped(
-      "Balou du Rouet",
-      "Stakkata",
-      "Baloubet du Rouet",
-      "Georgia",
-      "Stakkato",
-      "Walesca",
-    ),
-  },
-  {
-    id: "potro-conthargos-diamant",
-    type: "Potro",
-    name: "Potro Conthargos × Diamant",
-    image: "/genetics/foal.png",
-    line: "Conthargos",
-    breed: "Holsteiner",
-    discipline: "Salto",
-    origin: "Colombia",
-    location: "Rionegro, Antioquia",
-    price: 95_000_000,
-    status: "Disponible",
-    age: "1 año",
-    height: "1.45 m (proyectada 1.68 m)",
-    description:
-      "Potro de un año con excelente modelo y mecánica de salto en libertad. Genética doble de Grand Prix.",
-    pedigree: ped(
-      "Conthargos",
-      "Diamantina",
-      "Converter",
-      "Cynthia",
-      "Diamant de Semilly",
-      "Roxana",
-    ),
-  },
-  {
-    id: "servicio-transferencia-embriones",
-    type: "Servicio",
-    name: "Programa de Transferencia de Embriones",
-    image: "/genetics/embryo.png",
-    line: "Servicio Reproductivo",
-    breed: "Todas las razas",
-    discipline: "Salto",
-    origin: "Colombia",
-    location: "Centro Reproductivo · Antioquia",
-    price: 12_000_000,
-    status: "Disponible",
-    description:
-      "Programa integral: sincronización, colecta, transferencia y seguimiento ecográfico con receptoras propias.",
-    pedigree: ped("—", "—", "—", "—", "—", "—"),
-  },
-  {
-    id: "semen-cornet-obolensky",
-    type: "Semen",
-    name: "Cornet Obolensky",
-    image: "/genetics/line-cornet.png",
-    line: "Cornet Obolensky",
-    breed: "BWP",
-    discipline: "Salto",
-    origin: "Bélgica",
-    location: "Importado · Logística nacional",
-    price: null,
-    pricePerDose: 7_800_000,
-    dosesAvailable: 15,
-    registry: "BWP 02-318",
-    conservacion: "Congelado",
-    status: "Disponible",
-    description:
-      "Semen congelado de uno de los sementales de salto más cotizados del mundo. Disponibilidad limitada.",
-    pedigree: ped(
-      "Clinton",
-      "Rabanna du Bois",
-      "Corrado I",
-      "Urte",
-      "Randel",
-      "Nabanna",
-    ),
-  },
-  {
-    id: "embrion-stakkato-diamant",
+    id: "embrion-tijuana-de-las-majadas",
     type: "Embrión",
-    name: "Embrión Stakkato × Diamant",
-    image: "/genetics/embryo.png",
-    line: "Stakkato",
-    breed: "Hannoveriano",
-    discipline: "Salto",
-    origin: "Alemania",
-    location: "La Ceja, Antioquia",
-    price: 33_000_000,
+    name: "Tijuana de las Majadas / Embrión",
+    image: "/genetics/mare.png",
+    line: "Las Majadas",
+    raza: RAZA,
+    andar: "Trocha Pura (P3)",
+    birthDate: "29 de agosto de 2022",
+    sex: "Hembra",
+    location: "Criadero Palonegro · Colombia",
+    price: 30_000_000,
+    status: "Disponible",
+    featured: true,
+    conservacion: "Congelado",
+    description:
+      "Embrión de Trocha Pura, hija de la línea Las Majadas. Excelente finura de andar y aplomos correctos.",
+    pedigree: ped(
+      "Gran Señor de la 14",
+      "Majada del Café",
+      "Terremoto de Manizales",
+      "Cascabela",
+      "Conquistador",
+      "Mansión de las Majadas",
+    ),
+  },
+  {
+    id: "embrion-tirana-de-palonegro",
+    type: "Embrión",
+    name: "Tirana de Palonegro / Embrión",
+    image: "/genetics/mare-2.png",
+    line: "Palonegro",
+    raza: RAZA,
+    andar: "Trocha y Galope (P2)",
+    birthDate: "10 de octubre de 2022",
+    sex: "Hembra",
+    location: "Criadero Palonegro · Colombia",
+    price: 25_000_000,
     status: "Disponible",
     conservacion: "Fresco",
     description:
-      "Embrión fresco de cruce hannoveriano-francés, disponible para transferencia inmediata.",
+      "Embrión de Trocha y Galope de la casa Palonegro. Genética de doble propósito con gran despliegue y energía.",
     pedigree: ped(
-      "Stakkato",
-      "Diamantina",
-      "Spartan",
-      "Pia",
-      "Diamant de Semilly",
-      "Roxana",
+      "Vendaval de Palonegro",
+      "Reina de Palonegro",
+      "Embrujo de Palonegro",
+      "Gardenia",
+      "Sultán del Café",
+      "Tirana Vieja",
+    ),
+  },
+
+  /* ---------------------------- Donantes ---------------------------- */
+  {
+    id: "donante-excesiva-de-las-diosas",
+    type: "Donadora",
+    name: "Excesiva de las Diosas",
+    image: "/genetics/mare-3.png",
+    line: "Las Diosas",
+    raza: RAZA,
+    andar: "Trocha Pura (P3)",
+    birthDate: "30 de julio de 2016",
+    sex: "Hembra",
+    location: "Criadero Palonegro · Colombia",
+    price: 80_000_000,
+    status: "Disponible",
+    featured: true,
+    height: "1.46 m",
+    registry: "Fedequinas 18-4421",
+    reproductiveHistory: "9 embriones viables · 6 productos en pista",
+    results: ["Gran Campeona Trocha Pura 2022", "Mejor Andar Manizales 2021"],
+    description:
+      "Yegua donadora insignia de la línea Las Diosas. Vientre probado con productos campeones y finura de andar excepcional.",
+    pedigree: ped(
+      "Sortario de la Esmeralda",
+      "Diosa de las Majadas",
+      "Resorte IV",
+      "Pincelada del Sur",
+      "Capuchino",
+      "Excelsa de las Diosas",
+    ),
+  },
+  {
+    id: "donante-dulce-bendicion-villa-gloria",
+    type: "Donadora",
+    name: "Dulce Bendición de Villa Gloria",
+    image: "/genetics/mare.png",
+    line: "Villa Gloria",
+    raza: RAZA,
+    andar: "Paso Fino Colombiano (P4)",
+    birthDate: "04 de octubre de 2017",
+    sex: "Hembra",
+    location: "Criadero Palonegro · Colombia",
+    price: 80_000_000,
+    status: "Disponible",
+    featured: true,
+    height: "1.44 m",
+    registry: "Fedequinas 19-7782",
+    reproductiveHistory: "11 embriones viables · 8 productos nacidos",
+    results: ["Campeona Paso Fino 2023", "Reservada Gran Campeona 2022"],
+    description:
+      "Donadora de Paso Fino Colombiano de la casa Villa Gloria. Andar fino y acompasado, de gran reputación reproductiva.",
+    pedigree: ped(
+      "Dulce Sueño de Villa Gloria",
+      "Bendición del Norte",
+      "Capuchino",
+      "Aurora de Villa Gloria",
+      "Sereno",
+      "Gloria Eterna",
+    ),
+  },
+  {
+    id: "donante-tijuana-de-las-majadas",
+    type: "Donadora",
+    name: "Tijuana de las Majadas",
+    image: "/genetics/mare-2.png",
+    line: "Las Majadas",
+    raza: RAZA,
+    andar: "Trocha Pura (P3)",
+    birthDate: "29 de agosto de 2015",
+    sex: "Hembra",
+    location: "Criadero Palonegro · Colombia",
+    price: 40_000_000,
+    status: "Disponible",
+    height: "1.45 m",
+    registry: "Fedequinas 16-3310",
+    reproductiveHistory: "7 embriones viables · 5 productos en pista",
+    results: ["Top 5 Trocha Pura Medellín 2020"],
+    description:
+      "Vientre de la línea Las Majadas, reconocido por transmitir finura de andar y excelente disposición.",
+    pedigree: ped(
+      "Gran Señor de la 14",
+      "Majada del Café",
+      "Terremoto de Manizales",
+      "Cascabela",
+      "Conquistador",
+      "Mansión de las Majadas",
+    ),
+  },
+  {
+    id: "donante-almendra-fg",
+    type: "Donadora",
+    name: "Almendra de F.G",
+    image: "/genetics/mare-3.png",
+    line: "F.G",
+    raza: RAZA,
+    andar: "Trocha Pura (P3)",
+    birthDate: "20 de junio de 2016",
+    sex: "Hembra",
+    location: "Criadero Palonegro · Colombia",
+    price: 35_000_000,
+    status: "Disponible",
+    height: "1.43 m",
+    registry: "Fedequinas 17-9054",
+    reproductiveHistory: "6 embriones viables · 4 productos nacidos",
+    description:
+      "Donadora de Trocha Pura de la línea F.G, con destacada morfología y un andar limpio y sostenido.",
+    pedigree: ped(
+      "Faraón de F.G",
+      "Gladiola",
+      "Sultán del Café",
+      "Almendra Vieja",
+      "Resorte IV",
+      "Gardenia de F.G",
+    ),
+  },
+  {
+    id: "donante-tirana-de-palonegro",
+    type: "Donadora",
+    name: "Tirana de Palonegro",
+    image: "/genetics/mare.png",
+    line: "Palonegro",
+    raza: RAZA,
+    andar: "Trocha y Galope (P2)",
+    birthDate: "10 de octubre de 2015",
+    sex: "Hembra",
+    location: "Criadero Palonegro · Colombia",
+    price: 35_000_000,
+    status: "Disponible",
+    height: "1.47 m",
+    registry: "Fedequinas 16-2218",
+    reproductiveHistory: "8 embriones viables · 6 productos en pista",
+    results: ["Campeona Trocha y Galope 2021"],
+    description:
+      "Yegua donadora de la casa Palonegro en la modalidad de Trocha y Galope. Gran energía, despliegue y prepotencia.",
+    pedigree: ped(
+      "Vendaval de Palonegro",
+      "Reina de Palonegro",
+      "Embrujo de Palonegro",
+      "Gardenia",
+      "Sultán del Café",
+      "Tirana Vieja",
+    ),
+  },
+  {
+    id: "donante-replica-villa-maria",
+    type: "Donadora",
+    name: "Réplica de Villa María",
+    image: "/genetics/mare-2.png",
+    line: "Villa María",
+    raza: RAZA,
+    andar: "Trote y Galope (P1)",
+    birthDate: "08 de octubre de 2016",
+    sex: "Hembra",
+    location: "Criadero Palonegro · Colombia",
+    price: 30_000_000,
+    status: "Disponible",
+    height: "1.48 m",
+    registry: "Fedequinas 17-5566",
+    reproductiveHistory: "5 embriones viables · 3 productos nacidos",
+    description:
+      "Donadora de Trote y Galope de la línea Villa María, de gran alzada y movimientos amplios y elásticos.",
+    pedigree: ped(
+      "Magnífico de Villa María",
+      "Réplica Vieja",
+      "Centurión",
+      "María del Campo",
+      "Soberano",
+      "Brisa de Villa María",
+    ),
+  },
+
+  /* --------------------- Saltos de reproductores -------------------- */
+  {
+    id: "semen-greco-del-trebol",
+    type: "Semen",
+    name: "Greco del Trébol",
+    image: "/genetics/repro-greco.png",
+    line: "El Trébol",
+    raza: RAZA,
+    andar: "Trocha Pura (P3)",
+    birthDate: "22 de junio de 2014",
+    sex: "Macho",
+    location: "Criadero Palonegro · Colombia",
+    price: null,
+    pricePerDose: 2_000_000,
+    dosesAvailable: 30,
+    registry: "Fedequinas 15-1180",
+    conservacion: "Congelado",
+    status: "Disponible",
+    featured: true,
+    height: "1.48 m",
+    results: ["Gran Campeón Trocha Pura", "Padre de campeones nacionales"],
+    description:
+      "Salto reproductivo del semental Greco del Trébol. Trocha Pura con descendencia campeona, disponible en fresco y congelado.",
+    pedigree: ped(
+      "Resorte IV de Hatoviejo",
+      "Esmeralda del Trébol",
+      "Resorte III",
+      "Capuchina",
+      "Terremoto de Manizales",
+      "Trébol Real",
+    ),
+  },
+  {
+    id: "semen-ilusionista-villa-laura",
+    type: "Semen",
+    name: "Ilusionista de Villa Laura / Servicio Reproductivo",
+    image: "/genetics/repro-ilusionista.png",
+    line: "Villa Laura",
+    raza: RAZA,
+    andar: "Trocha Pura (P3)",
+    birthDate: "09 de mayo de 2016",
+    sex: "Macho",
+    location: "Criadero Palonegro · Colombia",
+    price: null,
+    pricePerDose: 800_000,
+    dosesAvailable: 40,
+    registry: "Fedequinas 17-6642",
+    conservacion: "Fresco",
+    status: "Disponible",
+    height: "1.46 m",
+    description:
+      "Servicio reproductivo (semen) del semental Ilusionista de Villa Laura. Finura de andar y temperamento dócil.",
+    pedigree: ped(
+      "Embrujo de Villa Laura",
+      "Ilusión del Norte",
+      "Capuchino",
+      "Laura del Café",
+      "Sereno",
+      "Villa Laura Vieja",
+    ),
+  },
+  {
+    id: "semen-aurelio-m-bermudas",
+    type: "Semen",
+    name: "Aurelio M de las Bermudas / Servicio Reproductivo",
+    image: "/genetics/repro-aurelio.png",
+    line: "Las Bermudas",
+    raza: RAZA,
+    andar: "Trocha Pura (P3)",
+    birthDate: "10 de febrero de 2015",
+    sex: "Macho",
+    location: "Criadero Palonegro · Colombia",
+    price: null,
+    pricePerDose: 600_000,
+    dosesAvailable: 35,
+    registry: "Fedequinas 16-4471",
+    conservacion: "Fresco",
+    status: "Disponible",
+    height: "1.45 m",
+    description:
+      "Servicio reproductivo (semen) del semental Aurelio M de las Bermudas. Gran prepotencia, brío y recogimiento.",
+    pedigree: ped(
+      "Mandamás de las Bermudas",
+      "Aurelia del Mar",
+      "Conquistador",
+      "Bermuda Real",
+      "Capuchino",
+      "Mar de las Bermudas",
+    ),
+  },
+  {
+    id: "semen-comanche",
+    type: "Semen",
+    name: "Comanche / Servicio Reproductivo",
+    image: "/genetics/repro-comanche.png",
+    line: "Comanche",
+    raza: RAZA,
+    andar: "Paseo",
+    birthDate: "01 de enero de 2015",
+    sex: "Macho",
+    location: "Criadero Palonegro · Colombia",
+    price: null,
+    pricePerDose: 600_000,
+    dosesAvailable: 25,
+    registry: "Fedequinas 15-9928",
+    conservacion: "Fresco",
+    status: "Disponible",
+    height: "1.50 m",
+    description:
+      "Servicio reproductivo (semen) del semental Comanche, modalidad de paseo. Morfología sobresaliente y carácter equilibrado.",
+    pedigree: ped(
+      "Jefe Comanche",
+      "Pradera del Llano",
+      "Soberano",
+      "Comanche Vieja",
+      "Magnífico",
+      "Llanura del Sur",
+    ),
+  },
+
+  /* ------------------------- Potros & Potrancas --------------------- */
+  {
+    id: "potro-tahur-de-las-diosas",
+    type: "Potro",
+    name: "Tahúr de las Diosas",
+    image: "/genetics/foal.png",
+    line: "Las Diosas",
+    raza: RAZA,
+    andar: "Trocha Pura (P3)",
+    birthDate: "3 de agosto de 2024",
+    sex: "Macho",
+    location: "Criadero Palonegro · Colombia",
+    price: null,
+    status: "Disponible",
+    height: "1.20 m (en crecimiento)",
+    description:
+      "Potro de Trocha Pura de la línea Las Diosas. Excelente modelo y andar prometedor desde temprana edad. Precio a consultar.",
+    pedigree: ped(
+      "Greco del Trébol",
+      "Excesiva de las Diosas",
+      "Resorte IV de Hatoviejo",
+      "Esmeralda del Trébol",
+      "Sortario de la Esmeralda",
+      "Diosa de las Majadas",
     ),
   },
 ];
@@ -441,13 +580,18 @@ export const geneticListings: GeneticListing[] = [
 
 export const geneticTypeLabels: Record<GeneticType, string> = {
   Embrión: "Embriones",
-  Semen: "Semen",
-  Padrote: "Padrotes",
-  Donadora: "Donadoras",
-  Preñez: "Preñeces",
-  Potro: "Potros",
-  Servicio: "Servicios",
+  Donadora: "Donantes",
+  Semen: "Saltos de Reproductores",
+  Potro: "Potros & Potrancas",
 };
+
+export const andares: Andar[] = [
+  "Trocha Pura (P3)",
+  "Trocha y Galope (P2)",
+  "Paso Fino Colombiano (P4)",
+  "Trote y Galope (P1)",
+  "Paseo",
+];
 
 export const formatPrice = (l: GeneticListing): string => {
   if (l.type === "Semen" && l.pricePerDose) {
