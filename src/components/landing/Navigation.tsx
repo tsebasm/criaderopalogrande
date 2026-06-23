@@ -86,7 +86,7 @@ export function Navigation() {
 
         <div className="flex items-center gap-3">
           <a
-            href="#visita"
+            href="/#visita"
             className={`hidden md:inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] font-semibold px-5 py-3 transition-colors ${
               scrolled
                 ? "bg-olive text-ivory hover:bg-olive-deep"
